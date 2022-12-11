@@ -1,14 +1,18 @@
 import React from 'react'
-import './styles.css'
-
+import Logo from '../img/logo.png';
 function Banner() {
-  return (
-    <div>
-        <div className='bannerBg'>
-            <h3>Logotipo Pirata</h3>
+    
+    return (
+        <div className='banner'>
+            <img src={Logo} style={{
+                width: '310px',
+                marginLeft: '0em',
+            }} alt="User avatar"
+            />
+
+
         </div>
-    </div>
-  )
+    )
 }
 
 export default Banner
