@@ -4,9 +4,10 @@ import { ModalBody } from 'react-bootstrap/esm';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import Axios from 'axios';
 import Swal from 'sweetalert2';
+import CrudOfertas from './CrudOfertas';
 
 
-class ModalOfertar extends React.Component {
+class ModalVerOfertas extends React.Component {
     constructor() {
         super();
         this.state = {
@@ -22,15 +23,6 @@ class ModalOfertar extends React.Component {
     }
     handleModal() {
         this.setState({ showModal: !this.state.showModal })
-    }
-
-    mandarCorreo() {
-        Axios.post("http://localhost:3001/insertOferta", {
-            inicial: this.state.form.correoEstudiante,
-            productoRef: this.props.id,
-        }).then(() => {
-        });
-        window.location.reload();
     }
 
     handleChange = e => {
@@ -79,7 +71,7 @@ class ModalOfertar extends React.Component {
         }
         return (
             <>
-                <Button style={botonescssw} onClick={() => this.handleModal()}> Ofertar</Button>
+                <Button style={botonescssw} onClick={() => this.handleModal()}> Ver Ofertas</Button>
                 <Modal show={this.state.showModal} onHide={() => this.handleModal()} >
                     <Modal.Header closeButton style={headercss}>
                         Ofertar Producto
@@ -87,28 +79,11 @@ class ModalOfertar extends React.Component {
                     <Modal.Body>
 
                         A continuación podra ofertar por un producto de la plataforma
-                        <form>
-                            <div className="col-lg-8 col-sm-12 form-group pt-1 ">
-                                <label style={{
-                                    fontWeight: "bold",
-                                    margin: "15px 2px"
-                                }}>Precio a ofertar
-                                </label>
-                                <input style={{
-                                    width: "150%",
-                                    borderColor: "#3498db"
-                                }}
-                                    type='text'
-                                    onChange={this.handleChange}
-                                    className="form-control"
-                                    id="" cols="30" rows="8"
-                                    name="correoEstudiante">
-                                </input>
-                            </div>
-                        </form>
+                        <CrudOfertas
+                            id = {this.props.id}
+                        />
                     </Modal.Body>
                     <Modal.Footer style={footercss} >
-                        <Button style={botonescss} onClick={() => this.mandarCorreo()}> Agregar Producto </Button>
                         <Button style={botonescss} onClick={() => this.handleModal()}>Cerrar</Button>
                     </Modal.Footer>
 
@@ -118,4 +93,4 @@ class ModalOfertar extends React.Component {
     };
 
 }
-export default ModalOfertar;
+export default ModalVerOfertas;

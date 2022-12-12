@@ -3,6 +3,7 @@ import { Table, Button, Container, Modal, ModalHeader, ModalBody, FormGroup, Mod
 import 'bootstrap/dist/css/bootstrap.min.css';
 import Axios from 'axios'
 import ModalOfertar from './ModalOfertar';
+import ModalVerOfertas from './ModalVerOfertas';
 
 const data = [
     { id: 1, usuario: "Naruto", correo: "sebarem723@gmail.com" },
@@ -53,7 +54,9 @@ function CrudSubastas() {
                             <td><a>{dato.producto} </a></td>
                             <td><a>{dato.inicial} </a></td>
 
-                            <td><Button>Ver Ofertas</Button></td>
+                            <td><ModalVerOfertas
+                                id = {dato.id}
+                                /></td>
                             <td><ModalOfertar
                                 id = {dato.id}
                                 />

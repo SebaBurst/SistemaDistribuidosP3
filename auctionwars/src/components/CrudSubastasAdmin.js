@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react'
 import { Table, Button, Container, Modal, ModalHeader, ModalBody, FormGroup, ModalFooter, } from "reactstrap";
 import 'bootstrap/dist/css/bootstrap.min.css';
 import Axios from 'axios'
+import ModalVerOfertas from './ModalVerOfertas';
 
 const data = [
     { id: 1, usuario: "Naruto", correo: "sebarem723@gmail.com" },
@@ -56,7 +57,9 @@ function CrudSubastasAdmin() {
 
                             <td><Button>Iniciar</Button></td>
                             <td><Button>Terminar</Button></td>
-                            <td><Button>Ver Ofertas</Button></td>
+                            <td><ModalVerOfertas
+                                id = {dato.id}
+                                /></td>
 
 
                         </tr>

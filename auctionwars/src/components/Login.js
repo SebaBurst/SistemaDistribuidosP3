@@ -2,13 +2,54 @@ import React, { useEffect, useState } from "react";
 import '../css/login.css'
 import Banner from './Banner'
 import Logo from '../img/loginicon.png';
+import Axios from 'axios'
 
-function changeView(e) {
+
+function changeView(e, id) {
     e.preventDefault();
-    window.location = '/usuario';
+    window.location = '/usuario/'+id;
   }
 
+function gameMaster(e){
+  e.preventDefault();
+  window.location = '/admin'
+}
 function Login() {
+  const [listaSubasta, setListaSubasta] = useState([]);
+    useEffect(() => {
+        Axios.get("http://localhost:3001/getUsers").then((response) => {
+            setListaSubasta(response.data)
+        });
+
+    }, []);
+
+
+    function submitHandler2(e) {
+      e.preventDefault();
+      const correo = e.target.elements.correo.value;
+      const password = e.target.elements.password.value;
+      if (correo == "administrador" && password == "controlmaestro") {
+          gameMaster(e)
+      }
+      else {
+        const datitos = [];
+
+    {
+        listaSubasta.map((a => {
+            if(a.username == correo){
+                if(a.password == password){
+                  changeView(e, a.id)
+                }
+            }
+            
+        }))
+    }
+          //IniciarSesion(password, correo);
+          //console.log("Llegue", correo);
+      }
+  }  
+
+
   return (
     <div>
       <Banner />
@@ -26,7 +67,7 @@ function Login() {
             </td>
           </table >
           <div class="form-block">
-            <form onSubmit={changeView}>
+            <form onSubmit={submitHandler2}>
               <input class="input-lg" required="required" name="correo" type="text" placeholder="Correo Electronico" />
               <br />
               <br />

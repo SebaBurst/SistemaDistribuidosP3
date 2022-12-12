@@ -25,21 +25,12 @@ class ModalOfertar extends React.Component {
     }
 
     mandarCorreo() {
-
         Axios.post("http://localhost:3001/insertOferta", {
             inicial: this.state.form.correoEstudiante,
             productoRef: this.props.id,
-
-
-
-
         }).then(() => {
-
         });
-    
         window.location.reload();
-
-
     }
 
     handleChange = e => {

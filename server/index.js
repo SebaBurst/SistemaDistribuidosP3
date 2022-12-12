@@ -39,8 +39,27 @@ app.post("/insertOferta", (req, res) =>{
 
 })
 
+//Register user Method
+app.get("/getOfertitas", (req, res) =>{
+
+  let SQL =
+  "SELECT * FROM ofertas";
+  db.query(SQL,(err, result) =>{
+    res.send(result);
+  });
+
+})
 
 
+
+
+
+app.get("/getUsers", (req, res) => {
+  const sqlSelect = "SELECT * FROM users";
+  db.query(sqlSelect, (err, result) => {
+    res.send(result);
+  });
+});
 
 
 

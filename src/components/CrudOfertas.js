@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react'
 import { Table, Button, Container, Modal, ModalHeader, ModalBody, FormGroup, ModalFooter, } from "reactstrap";
 import 'bootstrap/dist/css/bootstrap.min.css';
 import Axios from 'axios'
-import ModalVerOfertas from './ModalVerOfertas';
+import ModalOfertar from './ModalOfertar';
 
 const data = [
     { id: 1, usuario: "Naruto", correo: "sebarem723@gmail.com" },
@@ -15,17 +15,31 @@ const data = [
 
 
 
-function CrudSubastasAdmin() {
+function CrudOfertas({id}) {
     const [listaSubasta, setListaSubasta] = useState([]);
     useEffect(() => {
-        Axios.get("http://localhost:3001/getSubastas").then((response) => {
+        Axios.get("http://localhost:3001/getOfertitas").then((response) => {
             setListaSubasta(response.data)
         });
 
     }, []);
 
+    const datitos = [];
 
+    {
+        listaSubasta.map((a => {
+            if(a.productoRef == id){
+                var datos = {
+                    id: a.id,
+                    oferta: a.oferta,
+                
+                }
+                datitos.push(datos);
 
+            }
+            
+        }))
+    }
 
 
     const tableStyles = {
@@ -38,31 +52,18 @@ function CrudSubastasAdmin() {
                 <thead style={tableStyles} >
                     <tr>
                     <th>ID</th>
-                        <th>Producto</th>
-                        <th>Precio Inicial</th>
-                        <th>Iniciar</th>
-                        <th>Terminar</th>
-                        <th>Ver Ofertas</th>
-
+                        <th>Oferta</th>
 
                     </tr>
                 </thead>
 
                 <tbody>
-                    {listaSubasta.map((dato) => (
+                    {datitos.map((dato) => (
                         <tr key={dato.id}>
                             <td><a>{dato.id} </a></td>
-                            <td><a>{dato.producto} </a></td>
-                            <td><a>{dato.inicial} </a></td>
-
-                            <td><Button>Iniciar</Button></td>
-                            <td><Button>Terminar</Button></td>
-                            <td><ModalVerOfertas
-                                id = {dato.id}
-                                /></td>
-
-
+                            <td><a>{dato.oferta} </a></td>
                         </tr>
+                        
                     ))}
                 </tbody>
             </Table>
@@ -73,4 +74,4 @@ function CrudSubastasAdmin() {
     )
 }
 
-export default CrudSubastasAdmin
+export default CrudOfertas
