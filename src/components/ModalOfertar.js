@@ -111,7 +111,7 @@ class ModalOfertar extends React.Component {
                         </form>
                     </Modal.Body>
                     <Modal.Footer style={footercss} >
-                        <Button style={botonescss} onClick={() => this.mandarCorreo()}> Agregar Producto </Button>
+                        <Button style={botonescss} onClick={() => this.mandarCorreo()}> Ofertar Producto </Button>
                         <Button style={botonescss} onClick={() => this.handleModal()}>Cerrar</Button>
                     </Modal.Footer>
 

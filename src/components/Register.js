@@ -28,7 +28,7 @@ function Register() {
         if (password == password2) {
             set(ref(database, 'users/' + userId), {
                 username: correo,
-                correo: password,
+                password: password,
             });
         }
 
