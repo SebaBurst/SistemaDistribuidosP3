@@ -4,7 +4,7 @@ import { ModalBody } from 'react-bootstrap/esm';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import Swal from 'sweetalert2';
 import {database2} from "../firebase-config";
-import {set, ref} from "firebase/database"
+import {set, ref, update} from "firebase/database"
 import { v4 as uuidv4 } from 'uuid';
 
 class ModalAgregar extends React.Component {
@@ -30,17 +30,16 @@ class ModalAgregar extends React.Component {
         set(ref(database2, 'productos/' + id), {
             name: this.state.form.nombreEstudiante,
             price: this.state.form.correoEstudiante,
-            status : 'alive'
+            status : 'no',
+            imagen : this.state.form.imagen,
           });
-        
-
-
- 
-    
         window.location.reload();
 
 
     }
+
+
+
 
     handleChange = e => {
         this.setState({
@@ -60,11 +59,11 @@ class ModalAgregar extends React.Component {
         }
         const headercss = {
             color: 'white',
-            backgroundColor: '#3498db'
+            backgroundColor: 'rgb(202, 111, 30)'
         }
         const footercss = {
 
-            background: '#3498db',
+            background: 'rgb(202, 111, 30)',
 
         }
         const botonescss = {
@@ -73,7 +72,7 @@ class ModalAgregar extends React.Component {
 
             background: 'white',
             border: 'rgb(255, 87, 51)',
-            color: '#3498db',
+            color: 'rgb(202, 111, 30)',
             fontWeight: '600',
         }
 
@@ -83,7 +82,7 @@ class ModalAgregar extends React.Component {
             fontSize: '15px',
             color: 'white',
             border: 'rgb(255, 87, 51)',
-            background: '#3498db',
+            background: 'rgb(202, 111, 30)',
             fontWeight: '600',
         }
         return (
@@ -127,6 +126,21 @@ class ModalAgregar extends React.Component {
                                     className="form-control"
                                     id="" cols="30" rows="8"
                                     name="correoEstudiante">
+                                </input>
+                                <label style={{
+                                    fontWeight: "bold",
+                                    margin: "15px 2px"
+                                }}>URL de la imagen.
+                                </label>
+                                <input style={{
+                                    width: "150%",
+                                    borderColor: "#3498db"
+                                }}
+                                    type='text'
+                                    onChange={this.handleChange}
+                                    className="form-control"
+                                    id="" cols="30" rows="8"
+                                    name="imagen">
                                 </input>
                             </div>
                         </form>

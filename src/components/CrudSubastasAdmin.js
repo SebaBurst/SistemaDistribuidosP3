@@ -3,18 +3,23 @@ import { Table, Button, Container, Modal, ModalHeader, ModalBody, FormGroup, Mod
 import 'bootstrap/dist/css/bootstrap.min.css';
 import ModalVerOfertas from './ModalVerOfertas';
 import { database2 } from "../firebase-config";
+import { set, ref, getDatabase, child, get, onValue, update} from "firebase/database"
+import Countdown from 'react-countdown';
 
-import { set, ref, getDatabase, child, get, onValue} from "firebase/database"
 
+
+
+
+function iniciarSubasta({id, e}){
+  console.log("id Recibido"+id)
+
+}
 
 
 
 
 function CrudSubastasAdmin() {
     const [listaSubasta, setListaSubasta] = useState([]);
-
-
-   
     const getAvances = async () => {
         let proyectos = []
         const refdb = ref(database2, 'productos');
@@ -42,12 +47,17 @@ function CrudSubastasAdmin() {
                 id: a.key,
                 nombre: a.data.name,
                 precio: a.data.price,
+                estado: a.data.status,
+                date: a.data.date,
             }
             console.log("Subastas: "+a.data.name, a.data.price);
             datitos.push(datos);
 
         }))
     }
+
+
+   
 
 
 
@@ -80,10 +90,12 @@ function CrudSubastasAdmin() {
                             <td><a>{dato.id} </a></td>
                             <td><a>{dato.nombre} </a></td>
                             <td><a>{dato.precio} </a></td>
-
-                            <td><Button>Iniciar</Button></td>
+                            <td><Button onClick={(e) => this.handleClick(dato.id, e)} >Iniciar</Button></td>
                             <td><Button>Terminar</Button></td>
-                            
+                            <td><ModalVerOfertas
+                                id={dato.id}
+                            /></td>
+
                         </tr>
                     ))}
                 </tbody>

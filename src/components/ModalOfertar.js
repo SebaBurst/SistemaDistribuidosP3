@@ -2,9 +2,10 @@ import React, { useEffect, useState } from 'react'
 import { Button, Modal } from 'react-bootstrap'
 import { ModalBody } from 'react-bootstrap/esm';
 import 'bootstrap/dist/css/bootstrap.min.css';
-import Axios from 'axios';
 import Swal from 'sweetalert2';
-
+import { database3 } from "../firebase-config";
+import { set, ref, getDatabase, child, get, onValue } from "firebase/database"
+import { v4 as uuidv4 } from 'uuid';
 
 class ModalOfertar extends React.Component {
     constructor() {
@@ -25,11 +26,13 @@ class ModalOfertar extends React.Component {
     }
 
     mandarCorreo() {
-        Axios.post("http://localhost:3001/insertOferta", {
-            inicial: this.state.form.correoEstudiante,
-            productoRef: this.props.id,
-        }).then(() => {
-        });
+        const userId = uuidv4();
+            set(ref(database3, 'ofertas/' + userId), {
+                oferta: this.state.form.correoEstudiante,
+                productoRef: this.props.id,
+            });
+        
+
         window.location.reload();
     }
 
@@ -51,11 +54,11 @@ class ModalOfertar extends React.Component {
         }
         const headercss = {
             color: 'white',
-            backgroundColor: '#3498db'
+            backgroundColor: 'rgb(202, 111, 30)'
         }
         const footercss = {
 
-            background: '#3498db',
+            background: 'rgb(202, 111, 30)',
 
         }
         const botonescss = {
@@ -64,7 +67,7 @@ class ModalOfertar extends React.Component {
 
             background: 'white',
             border: 'rgb(255, 87, 51)',
-            color: '#3498db',
+            color: 'rgb(202, 111, 30)',
             fontWeight: '600',
         }
 
@@ -74,7 +77,7 @@ class ModalOfertar extends React.Component {
             fontSize: '15px',
             color: 'white',
             border: 'rgb(255, 87, 51)',
-            background: '#3498db',
+            background: 'rgb(202, 111, 30)',
             fontWeight: '600',
         }
         return (

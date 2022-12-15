@@ -5,6 +5,7 @@ import 'bootstrap/dist/css/bootstrap.min.css';
 import Axios from 'axios';
 import Swal from 'sweetalert2';
 import CrudOfertas from './CrudOfertas';
+import { database3 } from "../firebase-config";
 
 
 class ModalVerOfertas extends React.Component {
@@ -43,11 +44,11 @@ class ModalVerOfertas extends React.Component {
         }
         const headercss = {
             color: 'white',
-            backgroundColor: '#3498db'
+            backgroundColor: 'rgb(202, 111, 30)'
         }
         const footercss = {
 
-            background: '#3498db',
+            background: 'rgb(202, 111, 30)',
 
         }
         const botonescss = {
@@ -56,7 +57,7 @@ class ModalVerOfertas extends React.Component {
 
             background: 'white',
             border: 'rgb(255, 87, 51)',
-            color: '#3498db',
+            color: 'rgb(202, 111, 30)',
             fontWeight: '600',
         }
 
@@ -66,7 +67,7 @@ class ModalVerOfertas extends React.Component {
             fontSize: '15px',
             color: 'white',
             border: 'rgb(255, 87, 51)',
-            background: '#3498db',
+            background: 'rgb(202, 111, 30)',
             fontWeight: '600',
         }
         return (
@@ -74,11 +75,11 @@ class ModalVerOfertas extends React.Component {
                 <Button style={botonescssw} onClick={() => this.handleModal()}> Ver Ofertas</Button>
                 <Modal show={this.state.showModal} onHide={() => this.handleModal()} >
                     <Modal.Header closeButton style={headercss}>
-                        Ofertar Producto
+                        Ofertas del Producto
                     </Modal.Header>
                     <Modal.Body>
 
-                        A continuación podra ofertar por un producto de la plataforma
+                        A continuación ver las ofertas del producto
                         <CrudOfertas
                             id = {this.props.id}
                         />

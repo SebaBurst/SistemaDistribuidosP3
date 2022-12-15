@@ -3,7 +3,10 @@ import { Table, Button, Container, Modal, ModalHeader, ModalBody, FormGroup, Mod
 import 'bootstrap/dist/css/bootstrap.min.css';
 import Axios from 'axios'
 import ModalOfertar from './ModalOfertar';
+import { database3 } from "../firebase-config";
 
+import { set, ref, getDatabase, child, get, onValue } from "firebase/database"
+import { v4 as uuidv4 } from 'uuid';
 const data = [
     { id: 1, usuario: "Naruto", correo: "sebarem723@gmail.com" },
     { id: 2, usuario: "Goku", correo: "sebarem723@gmail.com" },
@@ -17,21 +20,33 @@ const data = [
 
 function CrudOfertas({id}) {
     const [listaSubasta, setListaSubasta] = useState([]);
-    useEffect(() => {
-        Axios.get("http://localhost:3001/getOfertitas").then((response) => {
-            setListaSubasta(response.data)
-        });
 
+    const getAvances = async () => {
+      let proyectos = []
+      const refdb = ref(database3, 'ofertas');
+      onValue(refdb, (snapshot) => {
+        snapshot.forEach(childSnapshot => {
+          let keyName = childSnapshot.key;
+          let data = childSnapshot.val();
+          console.log(data);
+          proyectos.push({ "key": keyName, "data": data })
+        });
+        setListaSubasta(proyectos);
+      })
+    };
+  
+    useEffect(() => {
+      getAvances();
     }, []);
 
     const datitos = [];
 
     {
         listaSubasta.map((a => {
-            if(a.productoRef == id){
+            if(a.data.productoRef == id){
                 var datos = {
-                    id: a.id,
-                    oferta: a.oferta,
+                    id: a.key,
+                    oferta: a.data.oferta,
                 
                 }
                 datitos.push(datos);

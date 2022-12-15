@@ -1,9 +1,10 @@
 import React, { useState, useEffect } from 'react'
 import { Table, Button, Container, Modal, ModalHeader, ModalBody, FormGroup, ModalFooter, } from "reactstrap";
 import 'bootstrap/dist/css/bootstrap.min.css';
-import Axios from 'axios'
-import ModalOfertar from './ModalOfertar';
 import ModalVerOfertas from './ModalVerOfertas';
+import { database2 } from "../firebase-config";
+import { set, ref, getDatabase, child, get, onValue} from "firebase/database"
+import ModalOfertar from './ModalOfertar';
 
 const data = [
     { id: 1, usuario: "Naruto", correo: "sebarem723@gmail.com" },
@@ -17,13 +18,41 @@ const data = [
 
 
 function CrudSubastas() {
-    const [listaSubasta, setListaSubasta] = useState([]);
-    useEffect(() => {
-        Axios.get("http://localhost:3001/getSubastas").then((response) => {
-            setListaSubasta(response.data)
-        });
 
+    const [listaSubasta, setListaSubasta] = useState([]);
+    const getAvances = async () => {
+        let proyectos = []
+        const refdb = ref(database2, 'productos');
+        onValue(refdb, (snapshot) => {
+            snapshot.forEach(childSnapshot =>{
+                let keyName = childSnapshot.key;
+                let data = childSnapshot.val();
+                console.log(data);
+                proyectos.push({"key": keyName, "data":data})
+            });
+            setListaSubasta(proyectos);
+        })
+    };
+
+    useEffect(() => {
+        getAvances();
     }, []);
+
+
+
+    const datitos = [];
+    {
+        listaSubasta.map((a => {
+            var datos = {
+                id: a.key,
+                nombre: a.data.name,
+                precio: a.data.price,
+            }
+            console.log("Subastas: "+a.data.name, a.data.price);
+            datitos.push(datos);
+
+        }))
+    }
 
 
 
@@ -48,11 +77,11 @@ function CrudSubastas() {
                 </thead>
 
                 <tbody>
-                    {listaSubasta.map((dato) => (
+                    {datitos.map((dato) => (
                         <tr key={dato.id}>
-                            <td><a>{dato.id} </a></td>
-                            <td><a>{dato.producto} </a></td>
-                            <td><a>{dato.inicial} </a></td>
+                              <td><a>{dato.id} </a></td>
+                            <td><a>{dato.nombre} </a></td>
+                            <td><a>{dato.precio} </a></td>
 
                             <td><ModalVerOfertas
                                 id = {dato.id}
