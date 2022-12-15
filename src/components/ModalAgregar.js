@@ -2,9 +2,10 @@ import React, { useEffect, useState } from 'react'
 import { Button, Modal } from 'react-bootstrap'
 import { ModalBody } from 'react-bootstrap/esm';
 import 'bootstrap/dist/css/bootstrap.min.css';
-import Axios from 'axios';
 import Swal from 'sweetalert2';
-
+import {database2} from "../firebase-config";
+import {set, ref} from "firebase/database"
+import { v4 as uuidv4 } from 'uuid';
 
 class ModalAgregar extends React.Component {
     constructor() {
@@ -25,25 +26,16 @@ class ModalAgregar extends React.Component {
     }
 
     mandarCorreo() {
+        const id = uuidv4();
+        set(ref(database2, 'productos/' + id), {
+            name: this.state.form.nombreEstudiante,
+            price: this.state.form.correoEstudiante,
+            status : 'alive'
+          });
+        
 
-        Axios.post("http://localhost:3001/insertProducto", {
-            producto: this.state.form.nombreEstudiante,
-            inicial: this.state.form.correoEstudiante,
 
-
-        }).then(() => {
-
-            Swal.fire({
-                title: 'El producto ha sido agregado con exito',
-                text: 'Se ha agregado el producto correctamente.',
-                imageUrl: 'https://img.freepik.com/vector-premium/tu-amigo-telefono-inteligente-tiene-mensaje-ti-personaje-telefono-dibujos-animados-icono-ilustracion-plana-aislado-blanco-carta-mensaje-enviado-telefono-movil_92289-502.jpg?w=740',
-                imageWidth: '300px',
-                imageAlt: 'Success',
-                confirmButtonColor: '#03568d',
-
-            })
-            
-        });
+ 
     
         window.location.reload();
 

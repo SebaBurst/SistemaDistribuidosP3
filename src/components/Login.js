@@ -3,6 +3,11 @@ import '../css/login.css'
 import Banner from './Banner'
 import Logo from '../img/loginicon.png';
 import Axios from 'axios'
+import {database} from "../firebase-config";
+import {database3} from "../firebase-config";
+import {database2} from "../firebase-config";
+
+import {set, ref} from "firebase/database"
 
 
 function changeView(e, id) {
@@ -12,41 +17,25 @@ function changeView(e, id) {
 
 function gameMaster(e){
   e.preventDefault();
+  const userId = 1;
+ 
   window.location = '/admin'
 }
 function Login() {
-  const [listaSubasta, setListaSubasta] = useState([]);
-    useEffect(() => {
-        Axios.get("http://localhost:3001/getUsers").then((response) => {
-            setListaSubasta(response.data)
-        });
-
-    }, []);
 
 
     function submitHandler2(e) {
       e.preventDefault();
-      const correo = e.target.elements.correo.value;
-      const password = e.target.elements.password.value;
-      if (correo == "administrador" && password == "controlmaestro") {
-          gameMaster(e)
-      }
-      else {
-        const datitos = [];
+      const userId = 4;
+      set(ref(database, 'users/' + userId), {
+        username: 'El Poio4',
+        email: 'Poio@gmail.com4',
+        profile_picture : 'La mejor fo2to de todas'
+      });
 
-    {
-        listaSubasta.map((a => {
-            if(a.username == correo){
-                if(a.password == password){
-                  changeView(e, a.id)
-                }
-            }
-            
-        }))
-    }
-          //IniciarSesion(password, correo);
-          //console.log("Llegue", correo);
-      }
+
+
+     
   }  
 
 
@@ -67,11 +56,11 @@ function Login() {
             </td>
           </table >
           <div class="form-block">
-            <form onSubmit={submitHandler2}>
-              <input class="input-lg" required="required" name="correo" type="text" placeholder="Correo Electronico" />
+            <form onSubmit={gameMaster}>
+              <input class="input-lg" name="correo" type="text" placeholder="Correo Electronico" />
               <br />
               <br />
-              <input class="input-lg" required="required" name="password" type="password" placeholder="Contraseña" />
+              <input class="input-lg" name="password" type="password" placeholder="Contraseña" />
               <br />
               <br />
               <input class="button-lg" type="submit" value="Iniciar Sesion" />
